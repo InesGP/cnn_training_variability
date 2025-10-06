@@ -1,7 +1,7 @@
 # cnn_training_variability
 
 * Currently work in progress, pairwise min Dice score figures and brain age predictions for random forest and SVM models using the random forest FastSurfer ensemble can be re-generated in the `Dice Scores` and `ROI Volumes` sections of the FastSurfer notebook respectively
-* While the random seed and weight initialization experiments are run in virtual environments on the same nodes, the MCA experiments are run in a Docker/apptainer container located at [inesgp/fuzzy_mnist_sr:train](https://hub.docker.com/repository/docker/inesgp/fuzzy_mnist_sr/general) or [inesgp/fuzzy_sr_fastsurfer:train](https://hub.docker.com/repository/docker/inesgp/fuzzy_sr_fastsurfer/general) depending on the use case
+* While the random seed and weight initialization experiments are run in virtual environments on the same nodes, the MCA experiments are run in a Docker/apptainer container located at [inesgp/fuzzy_mnist_sr:train](https://hub.docker.com/r/inesgp/fuzzy_mnist_sr) or [inesgp/fuzzy_sr_fastsurfer:train](https://hub.docker.com/r/inesgp/fuzzy_sr_fastsurfer) depending on the use case
 
 ### MNIST Use case
 * `mnist_train.py` and  `run_mnist_train.sh` contain the code to run the MNIST variability experiments
