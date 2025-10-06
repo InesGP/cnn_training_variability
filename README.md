@@ -2,6 +2,11 @@
 
 * Currently work in progress, pairwise min Dice score figures and brain age predictions for random forest and SVM models using the random forest FastSurfer ensemble can be re-generated in the `Dice Scores` and `ROI Volumes` sections of the FastSurfer notebook respectively
 * While the random seed and weight initialization experiments are run in virtual environments on the same nodes, the MCA experiments are run in a Docker/apptainer container located at [inesgp/fuzzy_mnist_sr:train](https://hub.docker.com/r/inesgp/fuzzy_mnist_sr) or [inesgp/fuzzy_sr_fastsurfer:train](https://hub.docker.com/r/inesgp/fuzzy_sr_fastsurfer) depending on the use case
+* If your architecture is not compatible with amd64, you might have to rebuild the containers.
+    1) Build the [Dockerfile from the Fuzzy repository](https://github.com/verificarlo/fuzzy/blob/master/docker/apps/Dockerfile.pytorch) as a base image with the instrumented libraries
+    2) Use the base image as is for MNIST
+    3) Transfer the instrumented libraries to an image with FastSurfer using [`Dockerfile_fuzzy_fastsurfer`](https://github.com/InesGP/cnn_training_variability/blob/main/Dockerfile_fuzzy_fastsurfer)
+* Note, MCA adds significant runtime overhead to the experiment and can only be run on CPU (ex: MNIST training usually requires 30 minutes, with MCA it can take 3 days)
 
 ### MNIST Use case
 * `mnist_train.py` and  `run_mnist_train.sh` contain the code to run the MNIST variability experiments
