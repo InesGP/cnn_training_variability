@@ -1,0 +1,26 @@
+# use fuzzy pytorch as base
+FROM inesgp/fuzzy_mnist_sr:train as fuzzy
+
+#for fuzzy pytorch at inference
+#FROM deepmi/fastsurfer:cpu-v2.1.1
+#for cnn training
+FROM deepmi/fastsurfer:cpu-v2.4.2
+
+ARG PYTHON_VERSION=3.10
+
+COPY --from=fuzzy /usr/local/lib/python${PYTHON_VERSION}/dist-packages/torch /venv/lib/python${PYTHON_VERSION}/site-packages/torch 
+COPY --from=fuzzy /usr/local/lib/lib* /usr/local/lib/.
+COPY --from=fuzzy /usr/lib/x86_64-linux-gnu/libomp* /usr/lib/x86_64-linux-gnu/.
+COPY --from=fuzzy /usr/lib/x86_64-linux-gnu/libflang* /usr/lib/x86_64-linux-gnu/.
+COPY --from=fuzzy /usr/lib/x86_64-linux-gnu/libpgmath* /usr/lib/x86_64-linux-gnu/.
+COPY --from=fuzzy /usr/lib/x86_64-linux-gnu/libompstub* /usr/lib/x86_64-linux-gnu/.
+
+USER root
+#RUN pip install pandas==1.3 --no-deps
+
+RUN pip install torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cpu --no-deps
+
+ENV LD_LIBRARY_PATH=/usr/local/lib
+ENV LD_LIBRARY_PATH=/venv/lib/python3.8/site-packages/torch/lib:$LD_LIBRARY_PATH
+
+ENTRYPOINT ["/bin/bash"]
